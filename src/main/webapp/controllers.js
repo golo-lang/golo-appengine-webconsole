@@ -1,16 +1,29 @@
 function ConsoleController($scope, $http) {  
   
+  $scope.readyMode = function() {
+    $("#exec-icon").removeClass("icon-spinner icon-spin").addClass("icon-play");
+    $("#exec-button").removeClass("disabled btn-inverse");
+  };
+  
+  $scope.waitingMode = function() {
+    $scope.output = "(running...)";
+    $("#exec-icon").addClass("icon-spinner icon-spin").removeClass("icon-play");
+    $("#exec-button").addClass("disabled btn-inverse");
+  };
+  
   $scope.output = "";
-  $scope.txt = "fisted";
   
   $scope.run = function() {
     var code = ace.edit('editor').getValue();
+    $scope.waitingMode();    
     $http.post("/run", code)
     .success(function(data, status, headers, config) {
       $scope.output = data;
+      $scope.readyMode();
     }).
     error(function(data, status, headers, config) {
       $scope.output = "Error encountered:\n" + data;
+      $scope.readyMode();
     });
   };
   
