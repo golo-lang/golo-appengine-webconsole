@@ -16,10 +16,11 @@
       #editor {
         position: relative;
         width: 100%;
-        height: 20em;
-        margin-bottom: 1em;
+        height: 30em;
+        margin-bottom: 2em;
       }
       .section {
+        margin-top: 2em;
         margin-bottom: 2em;
       }
     </style>
@@ -29,13 +30,24 @@
     <div class="container" ng-controller="ConsoleController">
       
       <div class="row section">
-        <h3>Editor</h3>
+        <div class="btn-group">
+          <button class="btn dropdown-toggle" data-toggle="dropdown">Samples <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li><a href="#" ng-click="load('hello')">Hello world</a></li>
+            <li><a href="#" ng-click="load('filter-map-reduce')">Filter / map / reduce</a></li>
+            <li><a href="#" ng-click="load('pimp')">Pimps: adding join() to Java lists</a></li>
+            <li><a href="#" ng-click="load('matching')">Matching operator</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="row section">        
         <div id="editor"></div>
         <div>
           <button id="exec-button" class="btn btn-large" ng-click="run()">
             <i id="exec-icon" class="icon-play icon-large"></i> Run (Command+E)            
-          </button>
-        </div>
+          </button>          
+        </div>        
       </div>
       
       <div class="row section">
@@ -46,16 +58,14 @@
     </div>
   </body>
 
-<script id="hello" type="text/golo">
-module test
+<script id="hello" type="text/golo">module test
 
 function run = |context| {
   context: log("Golo World")
 }
 </script>
   
-<script id="filter-map-reduce" type="text/golo">
-module test
+<script id="filter-map-reduce" type="text/golo">module test
 
 import java.util
 
@@ -75,8 +85,7 @@ function run = |context| {
 }
 </script>
 
-<script id="pimp" type="text/golo">
-module test
+<script id="pimp" type="text/golo">module test
 
 import java.lang
 import java.util
@@ -106,4 +115,29 @@ function run = |context| {
   return "[" + list: join(", ") + "]"
 }
 </script>
+
+<script id="matching" type="text/golo">module test
+
+import java.util.LinkedList
+
+local function data = -> LinkedList(): 
+  append("foo@bar.com", "+33.6.11.22.33"):
+  append("http://golo-lang.org/"):
+  append("def foo = bar(_._) with :> T")
+
+local function what_it_could_be = |item| -> match {
+  when item: contains("@") then "an email?"
+  when item: startsWith("+33") then "a French phone number?"
+  when item: startsWith("http://") then "a website URL?"
+  otherwise "I have no clue, mate!"
+}
+
+function run = |context| {
+  foreach (item in data()) {
+    context: log(item + " => " + what_it_could_be(item))
+  }
+  return "Ok"
+}
+</script>
+
 </html>

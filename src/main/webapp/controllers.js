@@ -25,24 +25,17 @@ function ConsoleController($scope, $http) {
       $scope.output = "Error encountered:\n" + data;
       $scope.readyMode();
     });
-  };
+  };  
   
   var editor = ace.edit("editor");
   // editor.setTheme("ace/theme/solarized_light");
   // editor.getSession().setMode("ace/mode/javascript");
-  document.getElementById('editor').style.fontSize='16px';
+  document.getElementById('editor').style.fontSize='14px';
   editor.setHighlightActiveLine(true);
   editor.getSession().setUseSoftTabs(true);
   editor.getSession().setTabSize(2);
     
-  editor.setValue([
-    "module test",
-    "",
-    "function run = |context| {",
-    "  context: log(\"Golo World\")",
-    "}",
-    ""
-    ].join('\n'));
+  editor.setValue($("#hello").text());
   editor.gotoLine(1);
     
   editor.commands.addCommand({
@@ -55,4 +48,10 @@ function ConsoleController($scope, $http) {
       $scope.run();
     }
   });
+  
+  $scope.load = function(sample) {
+    editor.setValue($("#" + sample).text());
+    editor.gotoLine(1);
+    editor.scrollToLine(1);
+  };
 }
