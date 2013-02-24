@@ -13,6 +13,17 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
     <script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="controllers.js"></script>
+    <style type="text/css" media="screen">
+      #editor {
+        position: relative;
+        width: 100%;
+        height: 20em;
+        margin-bottom: 1em;
+      }
+      .section {
+        margin-bottom: 2em;
+      }
+    </style>
   </head>
 
   <body>
@@ -36,15 +47,64 @@
     </div>
   </body>
 
-  <style type="text/css" media="screen">
-    #editor {
-      position: relative;
-      width: 100%;
-      height: 20em;
-      margin-bottom: 1em;
+<script id="hello" type="text/golo">
+module test
+
+function run = |context| {
+  context: log("Golo World")
+}
+</script>
+  
+<script id="filter-map-reduce" type="text/golo">
+module test
+
+import java.util
+
+function run = |context| {
+
+  let list = LinkedList()
+  foreach (i in range(1, 1000)) {
+    list: append(i, i * 2, i * 3)
+  }
+
+  let sum_of_even_plus_two = list:
+    map(|x| -> x + 2):
+    filter(|x| -> (x % 2) == 0):
+    reduce(0, |acc, x| -> acc + x)
+
+  return sum_of_even_plus_two
+}
+</script>
+
+<script id="pimp" type="text/golo">
+module test
+
+import java.lang
+import java.util
+
+pimp java.util.List {
+
+  function join = |this, separator| {
+    let builder = StringBuilder()
+    var first = true
+    foreach (element in this) {
+      case {
+        when first {
+          builder: append(element)
+          first = false
+        }
+        otherwise {
+          builder: append(separator): append(element)
+        }
+      }      
     }
-    .section {
-      margin-bottom: 2em;
-    }
-  </style>  
+    return builder: toString()
+  }
+}
+
+function run = |context| {
+  let list = LinkedList(): append("foo", "bar", "baz")
+  return "[" + list: join(", ") + "]"
+}
+</script>
 </html>
