@@ -11,7 +11,7 @@ function ConsoleController($scope, $http) {
     $("#exec-button").addClass("disabled btn-inverse");
   };
   
-  $scope.output = "";
+  $scope.output = "(type some code then run it!)";
   
   $scope.run = function() {
     var code = ace.edit('editor').getValue();
