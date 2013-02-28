@@ -1,5 +1,12 @@
 package org.gololang.webconsole;
 
+import com.google.appengine.api.capabilities.Capability;
+import com.google.apphosting.api.ApiProxy;
+import com.google.apphosting.api.ApiProxy.ApiConfig;
+import com.google.apphosting.api.ApiProxy.ApiProxyException;
+import com.google.apphosting.api.ApiProxy.Delegate;
+import com.google.apphosting.api.ApiProxy.Environment;
+import com.google.apphosting.api.ApiProxy.LogRecord;
 import com.google.common.base.Charsets;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.CharStreams;
@@ -11,7 +18,11 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.reflect.Field;
 import java.nio.charset.Charset;
+import java.util.HashSet;
+import java.util.List;
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -30,7 +41,60 @@ public class RunServlet extends HttpServlet {
       return this;
     }
   }
+  
+  @Override
+  public void init() throws ServletException {
+    super.init();
+    final HashSet<String> forbidden = new HashSet<String>() {
+      {
+        for (Field field : Capability.class.getFields()) {
+          if (field.getType() == Capability.class) {
+            try {
+              Capability cap = (Capability) field.get(null);
+              add(cap.getPackageName());
+            } catch (IllegalArgumentException | IllegalAccessException ex) {
+              throw new ServletException(ex);
+            }
+          }
+        }
+      }
+    };
+    final Delegate delegate = ApiProxy.getDelegate();
+    ApiProxy.setDelegate(new Delegate() {
 
+      @Override
+      public byte[] makeSyncCall(Environment env, String packageName, String methodName, byte[] request) throws ApiProxyException {
+        if (forbidden.contains(packageName)) {
+          throw new ApiProxyException("Access to " + packageName + " is forbidden");
+        }
+        return delegate.makeSyncCall(env, packageName, methodName, request);
+      }
+
+      @Override
+      public Future makeAsyncCall(Environment env, String packageName, String methodName, byte[] request, ApiConfig config) {
+        if (forbidden.contains(packageName)) {
+          throw new ApiProxyException("Access to " + packageName + " is forbidden");
+        }
+        return delegate.makeAsyncCall(env, packageName, methodName, request, config);
+      }
+
+      @Override
+      public void log(Environment env, LogRecord record) {
+        delegate.log(env, record);
+      }
+
+      @Override
+      public void flushLogs(Environment env) {
+        delegate.flushLogs(env);
+      }
+
+      @Override
+      public List getRequestThreads(Environment env) {
+        return delegate.getRequestThreads(env);
+      }
+    });
+  } 
+  
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
