@@ -13,10 +13,14 @@
     <script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="controllers.js"></script>
     <style type="text/css" media="screen">
+      body {
+        width: 100%;
+        height: 100%;
+      }
       #editor {
         position: relative;
         width: 100%;
-        height: 30em;
+        height: 50em;
         margin-bottom: 1em;
         border: solid 1px #ccc;
       }
@@ -115,14 +119,11 @@ pimp java.util.List {
     let builder = StringBuilder()
     var first = true
     foreach (element in this) {
-      case {
-        when first {
-          builder: append(element)
-          first = false
-        }
-        otherwise {
-          builder: append(separator): append(element)
-        }
+      if first {
+        builder: append(element)
+        first = false
+      } else {
+        builder: append(separator): append(element)
       }      
     }
     return builder: toString()

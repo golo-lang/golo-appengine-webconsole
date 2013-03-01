@@ -32,6 +32,7 @@ function ConsoleController($scope, $http) {
   // editor.getSession().setMode("ace/mode/javascript");
   document.getElementById('editor').style.fontSize='14px';
   editor.setHighlightActiveLine(true);
+  editor.setPrintMarginColumn(100);
   editor.getSession().setUseSoftTabs(true);
   editor.getSession().setTabSize(2);
     
