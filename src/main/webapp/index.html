@@ -39,6 +39,7 @@
           <button class="btn dropdown-toggle" data-toggle="dropdown">Samples <span class="caret"></span></button>
           <ul class="dropdown-menu">
             <li><a href="#" ng-click="load('hello')">Hello world</a></li>
+            <li><a href="#" ng-click="load('coin-change')">Coin problem</a></li>
             <li><a href="#" ng-click="load('filter-map-reduce')">Filter / map / reduce</a></li>
             <li><a href="#" ng-click="load('pimp')">Pimps: adding join() to Java lists</a></li>
             <li><a href="#" ng-click="load('matching')">Matching operator</a></li>
@@ -87,7 +88,29 @@ function run = |context| {
   context: log("Golo World")
 }
 </script>
-  
+
+<script id="coin-change" type="text/golo">module CoinChange
+
+import java.util.LinkedList
+
+function change = |money, coins| -> match {
+  when money == 0 then 1
+  when (money < 0) or (coins: isEmpty()) then 0
+  otherwise change(money - coins: head(), coins) + change(money, coins: tail())
+}
+
+function run = |context| {
+  let coins = LinkedList(): append(1, 2, 5, 10, 20)
+  context: log("Coins: " + coins)
+  context: log("0: " + change(0, coins))
+  context: log("1: " + change(1, coins))
+  context: log("2: " + change(2, coins))
+  context: log("10: " + change(10, coins))
+  context: log("12: " + change(12, coins))
+  context: log("6: " + change(6, coins))
+}
+</script>
+
 <script id="filter-map-reduce" type="text/golo">module test
 
 import java.util
