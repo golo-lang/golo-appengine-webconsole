@@ -27,7 +27,7 @@
       <version>1.7.5</version>
     </dependency>
     <dependency>
-      <groupId>org.gololang</groupId>
+      <groupId>org.golo-lang</groupId>
       <artifactId>golo</artifactId>
       <version>0-SNAPSHOT</version>
     </dependency>
