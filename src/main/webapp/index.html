@@ -51,15 +51,20 @@
       
       <div class="row section">
         <div class="btn-group">
-          <button class="btn dropdown-toggle" data-toggle="dropdown">Samples <span class="caret"></span></button>
+          <button class="btn dropdown-toggle" data-toggle="dropdown"><i class="icon-beaker icon-large"></i> Samples <span class="caret"></span></button>
           <ul class="dropdown-menu">
             <li><a href="#" ng-click="load('hello')">Hello world</a></li>
             <li><a href="#" ng-click="load('coin-change')">Coin problem</a></li>
             <li><a href="#" ng-click="load('filter-map-reduce')">Filter / map / reduce</a></li>
             <li><a href="#" ng-click="load('pimp')">Pimps: adding join() to Java lists</a></li>
             <li><a href="#" ng-click="load('matching')">Matching operator</a></li>
-          </ul>
+            <li><a href="#" ng-click="load('call-me-maybe')">Exceptions and closures</a></li>
+            <li><a href="#" ng-click="load('dynamic-object')">Dynamic objects</a></li>            
+          </ul>          
         </div>
+        <span>
+          <a href="http://golo-lang.org/documentation/next/" class="btn"><i class="icon-book icon-large"></i> Golo documentation</a>
+        </span>        
         <div class="pull-right">          
           <a href="https://twitter.com/share" class="twitter-share-button" data-via="golo_lang" data-size="large" data-hashtags="gololang">Tweet</a>
           <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
@@ -85,6 +90,12 @@
       
       <div class="row section">
         <pre id="output">{{output}}</pre>
+        <ul>
+          <li>The <code>run</code> function will be executed.</li>
+          <li>Its <code>context</code> parameter is an object providing a <code>log</code> method as
+          a replacement for the standard <code>println</code> function.</li>
+          <li>The return value of <code>run</code> is printed, too.</li>
+        </ul>
       </div>
       
       <div class="row section">
@@ -195,6 +206,50 @@ function run = |context| {
     context: log(item + " => " + what_it_could_be(item))
   }
   return "Ok"
+}
+</script>
+
+<script type="text/golo" id="call-me-maybe">module test
+
+local function callMeMaybe = |func, default| {
+  try {
+    return func()
+  } catch (e) {
+    return default
+  }
+}
+
+function run = |context| {
+
+  let foo = "foo"
+  context: log(callMeMaybe({ return foo + ":bar" }, "WTF"))
+  context: log(callMeMaybe(-> foo + ":bar", "WTF"))
+
+  context: log(callMeMaybe(^damn, "WTF"))
+  context: log(callMeMaybe(-> raise("WTF"), "Ok"))
+}
+
+local function damn = -> "Damn"
+</script>
+
+<script type="text/golo" id="dynamic-object">module test
+
+local function Person = |name, email| ->
+  DynamicObject(): 
+  name(name): 
+  email(email):
+  define("to_s", |this| -> this: name() + " <" + this: email() + ">")
+
+function run = |context| {
+
+  let julien = Person("Julien", "julien.ponge@insa-lyon.fr")
+  context: log(julien: to_s())
+
+  julien: name("Julien Ponge")
+  context: log(julien: to_s())
+
+  let ploping = DynamicObject(): define("plop", |this| -> "Plop!")
+  context: log(julien: copy(): mixin(ploping): freeze(): plop())
 }
 </script>
 

@@ -20,7 +20,7 @@
  */
 
 function ConsoleController($scope, $http) {  
-  
+
   $scope.readyMode = function() {
     $("#exec-icon").removeClass("icon-spinner icon-spin").addClass("icon-play");
     $("#exec-button").removeClass("disabled btn-inverse");
