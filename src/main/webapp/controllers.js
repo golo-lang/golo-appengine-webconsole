@@ -52,6 +52,7 @@ function ConsoleController($scope, $http) {
   // editor.setTheme("ace/theme/solarized_light");
   // editor.getSession().setMode("ace/mode/javascript");
   document.getElementById('editor').style.fontSize='14px';
+  document.getElementById('editor').style.fontFamily='Source Code Pro';
   editor.setHighlightActiveLine(true);
   editor.setPrintMarginColumn(100);
   editor.getSession().setUseSoftTabs(true);
