@@ -137,13 +137,13 @@ public class RunServlet extends HttpServlet {
         }
       } catch (GoloCompilationException e) {
         if (e.getCause() != null) {
-          response.getWriter().write(e.getCause().getMessage());
+          response.getWriter().write(e.getCause().getMessage() + "\n");
         }
         for (GoloCompilationException.Problem problem : e.getProblems()) {
-          response.getWriter().write(problem.getDescription());
+          response.getWriter().write(problem.getDescription() + "\n");
         }
       } catch (TokenMgrError e) {
-        response.getWriter().write(e.getMessage());
+        response.getWriter().write(e.getMessage() + "\n");
       }
     }
   }
