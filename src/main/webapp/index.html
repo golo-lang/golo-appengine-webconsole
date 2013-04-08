@@ -68,7 +68,7 @@
             <li><a href="#" ng-click="load('hello')">Hello world</a></li>
             <li><a href="#" ng-click="load('coin-change')">Coin problem</a></li>
             <li><a href="#" ng-click="load('filter-map-reduce')">Filter / map / reduce</a></li>
-            <li><a href="#" ng-click="load('pimp')">Pimps: adding join() to Java lists</a></li>
+            <li><a href="#" ng-click="load('augment')">Augmentations: adding join() to Java lists</a></li>
             <li><a href="#" ng-click="load('matching')">Matching operator</a></li>
             <li><a href="#" ng-click="load('call-me-maybe')">Exceptions and closures</a></li>
             <li><a href="#" ng-click="load('dynamic-object')">Dynamic objects</a></li>            
@@ -170,12 +170,12 @@ function run = |context| {
 }
 </script>
 
-<script id="pimp" type="text/golo">module test
+<script id="augment" type="text/golo">module test
 
 import java.lang
 import java.util
 
-pimp java.util.List {
+augment java.util.List {
 
   function join = |this, separator| {
     let builder = StringBuilder()
