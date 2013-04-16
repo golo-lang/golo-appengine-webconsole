@@ -71,7 +71,8 @@
             <li><a href="#" ng-click="load('augment')">Augmentations: adding join() to Java lists</a></li>
             <li><a href="#" ng-click="load('matching')">Matching operator</a></li>
             <li><a href="#" ng-click="load('call-me-maybe')">Exceptions and closures</a></li>
-            <li><a href="#" ng-click="load('dynamic-object')">Dynamic objects</a></li>            
+            <li><a href="#" ng-click="load('dynamic-object')">Dynamic objects</a></li>
+            <li><a href="#" ng-click="load('nulls')">Null-safe method invocations and orIfNull</a></li>
           </ul>          
         </div>
         <span>
@@ -263,6 +264,33 @@ function run = |context| {
 
   let ploping = DynamicObject(): define("plop", |this| -> "Plop!")
   context: log(julien: copy(): mixin(ploping): freeze(): plop())
+}
+</script>
+
+<script type="text/golo" id="nulls">module test
+
+import java.util
+
+function run = |context| {
+
+  # Data model, will be better the day we have literals for common collections
+  let contacts = HashMap():
+    add("mrbean",
+      HashMap(): add("email", "bean@gmail.com"):
+                 add("url", "http://mrbean.com")):
+    add("larry",
+      HashMap(): add("email", "larry@iamricherthanyou.com"))
+
+  # MrBean and Larry
+  let mrbean = contacts: get("mrbean")
+  let larry = contacts: get("larry")
+
+  # Illustrates orIfNull
+  context: log(mrbean: get("url") orIfNull "n/a")
+  context: log(larry: get("url") orIfNull "n/a")
+
+  # Querying a non-existent data model because there is no 'address' entry
+  context: log(mrbean: get("address")?: street()?: number() orIfNull "n/a")
 }
 </script>
 
