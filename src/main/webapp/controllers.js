@@ -19,7 +19,8 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-function ConsoleController($scope, $http) {  
+function ConsoleController($scope, $http) {
+  "use strict";
 
   $scope.readyMode = function() {
     $("#exec-icon").removeClass("icon-spinner icon-spin").addClass("icon-play");
