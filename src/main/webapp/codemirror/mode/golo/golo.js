@@ -18,12 +18,27 @@ CodeMirror.defineMode('golo', function(conf) {
 
     var wordOperators = wordRegexp(['and', 'or', 'not',
                                     'is', 'isnt', 'in',
-                                    'instanceof', 'typeof', 'var', 'let']);
-    var indentKeywords = ['for', 'while', 'loop', 'if', 'unless', 'else',
-                          'switch', 'try', 'catch', 'finally', 'class', 'struct', 'augment', 'function'];
-    var commonKeywords = ['break', 'by', 'continue', 'debugger', 'delete',
+                                    'instanceof', 'typeof', 'var', 'let', 'oftype']);
+    var indentKeywords = ['for', 'foreach', 'each', 'while', 'loop', 'if', 'unless', 'else',
+                          'case', 'match', 'try', 'catch', 'finally',
+                          'class', 'struct', 'array', 'tuple', 'map', 'list', 'set', 'vector', 'range',
+                          'augment', 'function'];
+    var commonKeywords = ['break', 'continue', 'delete',
                           'do', 'in', 'of', 'new', 'return', 'then',
-                          'this', 'throw', 'when', 'until', 'import', 'module'];
+                          'this', 'throw', 'raise', 'when', 'otherwise', 'until', 'local', 'import', 'module',
+                          'print', 'println', 'readln', 'context', 'log',
+                          'asInterfaceInstance', 'to',
+                          'bindAt', 'andThen', 'fun', 'require', 'requireNotNull',
+                          'fileToText', 'textToFile',
+                          'times', 'upTo', 'downTo', 'format', 'reduce',
+                          'append', 'prepend', 'insert', 'head', 'tail',
+                          'filter', 'join', 'reverse', 'reversed', 'sort', 'sorted',
+                          'include', 'exclude', 'has', 'add', 'delete', 'addIfAbsent', 'getOrElse',
+                          'unmodifiableView', 'newWithSameType',
+                          'DynamicObject', 'define', 'get', 'undefine', 'mixin', 'copy', 'freeze', 'properties',
+                          'getKey', 'getValue',
+                          'asModule', 'anonymousModule', 'asFunction', 'def'
+                         ];
 
     var keywords = wordRegexp(indentKeywords.concat(commonKeywords));
 
