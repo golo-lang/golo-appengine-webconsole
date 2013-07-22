@@ -36,7 +36,7 @@ function ConsoleController($scope, $http) {
   $scope.output = "(type some code then run it!)";
   
   $scope.run = function() {
-    var code = ace.edit('editor').getValue();
+    var code = editor.doc.getValue();
     $scope.waitingMode();    
     $http.post("/run", code)
     .success(function(data, status, headers, config) {
@@ -47,35 +47,29 @@ function ConsoleController($scope, $http) {
       $scope.output = "Error encountered:\n" + data;
       $scope.readyMode();
     });
-  };  
-  
-  var editor = ace.edit("editor");
-  // editor.setTheme("ace/theme/solarized_light");
-  // editor.getSession().setMode("ace/mode/javascript");
-  document.getElementById('editor').style.fontSize='14px';
-  document.getElementById('editor').style.fontFamily='Source Code Pro';
-  editor.setHighlightActiveLine(true);
-  editor.setPrintMarginColumn(100);
-  editor.getSession().setUseSoftTabs(true);
-  editor.getSession().setTabSize(2);
-    
-  editor.setValue($("#hello").text());
-  editor.gotoLine(1);
-    
-  editor.commands.addCommand({
-    name: 'run',
-    bindKey: {
-      win: 'Ctrl-E',  
-      mac: 'Command-E'
-    },
-    exec: function(editor) {
-      $scope.run();
+  };
+
+  window.editor = CodeMirror(document.getElementById("editor"), {
+    mode: "golo",
+    theme : "solarized",
+    styleActiveLine: true,
+    lineNumbers : true,
+    value: $("#hello").text(),
+    extraKeys: {
+      "Ctrl-E": function() {
+        $scope.run();
+      },
+      "Cmd-E": function() {
+        $scope.run();
+      }
     }
   });
-  
+
+  editor.setSize("100%","100%")
+  editor.doc.setCursor(0,0)
+
   $scope.load = function(sample) {
-    editor.setValue($("#" + sample).text());
-    editor.gotoLine(1);
-    editor.scrollToLine(1);
+    editor.doc.setValue($("#" + sample).text());
+    editor.doc.setCursor(0,0)
   };
 }
