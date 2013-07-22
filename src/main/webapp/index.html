@@ -66,6 +66,7 @@
           <button class="btn dropdown-toggle" data-toggle="dropdown"><i class="icon-beaker icon-large"></i> Samples <span class="caret"></span></button>
           <ul class="dropdown-menu">
             <li><a href="#" ng-click="load('hello')">Hello world</a></li>
+            <li><a href="#" ng-click="load('data-structs')">Data structures</a></li>
             <li><a href="#" ng-click="load('coin-change')">Coin problem</a></li>
             <li><a href="#" ng-click="load('filter-map-reduce')">Filter / map / reduce</a></li>
             <li><a href="#" ng-click="load('augment')">Augmentations: adding join() to Java lists</a></li>
@@ -291,6 +292,25 @@ function run = |context| {
 
   # Querying a non-existent data model because there is no 'address' entry
   context: log(mrbean: get("address")?: street()?: number() orIfNull "n/a")
+}
+</script>
+
+<script type="text/golo" id="data-structs">module test
+
+struct Point = { x, y }
+
+function run = |context| {
+  let p = Point(10, 20)
+  context: log(p)
+  
+  let tuple = [p, Point(p: x() + 30, p: y() + 30)]
+  context: log(tuple)
+  
+  let set = set[1, 2, 3, 4, 4, 4, 4, 4]
+  context: log(set)
+  
+  let map = map[["foo", "bar"], ["bar", "baz"]]
+  context: log(map)
 }
 </script>
 
