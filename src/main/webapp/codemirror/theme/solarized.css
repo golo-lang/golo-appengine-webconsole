@@ -141,11 +141,11 @@ http://ethanschoonover.com/solarized/img/solarized-palette.png
   box-shadow: inset 7px 0 12px -6px #000;
 }
 
-/* Gutter border and some shadow from it  */
+
+/* Gutter border */
 .cm-s-solarized .CodeMirror-gutters {
   padding: 0 15px 0 10px;
-  box-shadow: 0 10px 20px black;
-  border-right: 1px solid;
+  border-right: 1px solid rgba(0, 0, 0, 0.34);
 }
 
 /* Gutter colors and line number styling based of color scheme (dark / light) */
