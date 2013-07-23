@@ -28,6 +28,14 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
+    <link rel="apple-touch-icon" sizes="72x72" href="ipadicons/Icon-72.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="ipadicons/Icon-72@2x.png" />
+    <link rel="apple-touch-icon" sizes="50x50" href="ipadicons/Icon-Small-50.png" />
+    <link rel="apple-touch-icon" sizes="100x100" href="ipadicons/Icon-Small-50@2x.png" />
+    <link rel="apple-touch-icon" sizes="29x29" href="ipadicons/Icon-Small.png" />
+    <link rel="apple-touch-icon" sizes="58x58" href="ipadicons/Icon-Small@2x.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="ipadicons/LargeIcon.png" />
+
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Ubuntu:400,400italic|Source+Code+Pro' rel='stylesheet' type='text/css'>
@@ -346,7 +354,7 @@ function run = |context| {
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
-  
+
   var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
   if(iOS) { document.body.style.paddingTop = "15px"}
 </script>
