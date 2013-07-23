@@ -28,6 +28,37 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
+    <link rel="apple-touch-icon" sizes="72x72" href="ipadicons/Icon-72.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="ipadicons/Icon-72@2x.png" />
+    <link rel="apple-touch-icon" sizes="50x50" href="ipadicons/Icon-Small-50.png" />
+    <link rel="apple-touch-icon" sizes="100x100" href="ipadicons/Icon-Small-50@2x.png" />
+    <link rel="apple-touch-icon" sizes="29x29" href="ipadicons/Icon-Small.png" />
+    <link rel="apple-touch-icon" sizes="58x58" href="ipadicons/Icon-Small@2x.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="ipadicons/LargeIcon.png" />
+
+    <!-- iPad (portrait) -->
+    <link rel="apple-touch-startup-image"
+      media="(device-width: 768px)
+        and (orientation: portrait)"
+      href="splashscreens/apple-touch-startup-image-768x1004.png">
+    <!-- iPad (landscape) -->
+    <link rel="apple-touch-startup-image"
+      media="(device-width: 768px)
+        and (orientation: landscape)"
+      href="apple-touch-startup-image-748x1024.png">
+    <!-- iPad (Retina, portrait) -->
+    <link rel="apple-touch-startup-image"
+      media="(device-width: 768px)
+        and (orientation: portrait)
+        and (-webkit-device-pixel-ratio: 2)"
+      href="splashscreens/apple-touch-startup-image-1536x2008.png">
+    <!-- iPad (Retina, landscape) -->
+    <link rel="apple-touch-startup-image"
+      media="(device-width: 768px)
+        and (orientation: landscape)
+        and (-webkit-device-pixel-ratio: 2)"
+      href="splashscreens/apple-touch-startup-image-1496x2048.png">
+
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Ubuntu:400,400italic|Source+Code+Pro' rel='stylesheet' type='text/css'>
@@ -347,6 +378,8 @@ function run = |context| {
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
+  var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
+  if(iOS) { document.body.style.paddingTop = "15px"}
 </script>
 
 </html>
