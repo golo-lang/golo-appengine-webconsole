@@ -100,13 +100,13 @@
           <button class="btn dropdown-toggle" data-toggle="dropdown"><i class="icon-beaker icon-large"></i> Samples <span class="caret"></span></button>
           <ul class="dropdown-menu">
             <li><a href="#" ng-click="load('hello')">Hello world</a></li>
-            <li><a href="#" ng-click="load('data-structs')">Data structures</a></li>
             <li><a href="#" ng-click="load('coin-change')">Coin problem</a></li>
             <li><a href="#" ng-click="load('filter-map-reduce')">Filter / map / reduce</a></li>
-            <li><a href="#" ng-click="load('augment')">Augmentations: adding join() to Java lists</a></li>
+            <li><a href="#" ng-click="load('augment')">Augmentations: adding joinWith() to Java lists</a></li>
             <li><a href="#" ng-click="load('matching')">Matching operator</a></li>
             <li><a href="#" ng-click="load('call-me-maybe')">Exceptions and closures</a></li>
             <li><a href="#" ng-click="load('dynamic-object')">Dynamic objects</a></li>
+            <li><a href="#" ng-click="load('data-structs')">Structs</a></li>
             <li><a href="#" ng-click="load('nulls')">Null-safe method invocations and orIfNull</a></li>
           </ul>          
         </div>
@@ -166,8 +166,6 @@ function run = |context| {
 
 <script id="coin-change" type="text/golo">module CoinChange
 
-import java.util.LinkedList
-
 function change = |money, coins| -> match {
   when money == 0 then 1
   when (money < 0) or (coins: isEmpty()) then 0
@@ -175,7 +173,7 @@ function change = |money, coins| -> match {
 }
 
 function run = |context| {
-  let coins = LinkedList(): append(1, 2, 5, 10, 20)
+  let coins = list[1, 2, 5, 10, 20]
   context: log("Coins: " + coins)
   context: log("0: " + change(0, coins))
   context: log("1: " + change(1, coins))
@@ -213,7 +211,7 @@ import java.util
 
 augment java.util.List {
 
-  function join = |this, separator| {
+  function joinWith = |this, separator| {
     let builder = StringBuilder()
     var first = true
     foreach (element in this) {
@@ -229,8 +227,8 @@ augment java.util.List {
 }
 
 function run = |context| {
-  let list = LinkedList(): append("foo", "bar", "baz")
-  return "[" + list: join(", ") + "]"
+  let list = list["foo", "bar", "baz"]
+  return "[" + list: joinWith(", ") + "]"
 }
 </script>
 
@@ -285,9 +283,9 @@ local function damn = -> "Damn"
 
 local function Person = |name, email| ->
   DynamicObject(): 
-  name(name): 
-  email(email):
-  define("to_s", |this| -> this: name() + " <" + this: email() + ">")
+    define("name", name): 
+    define("email", email):
+    define("to_s", |this| -> this: name() + " <" + this: email() + ">")
 
 function run = |context| {
 
@@ -304,17 +302,17 @@ function run = |context| {
 
 <script type="text/golo" id="nulls">module test
 
-import java.util
-
 function run = |context| {
 
-  # Data model, will be better the day we have literals for common collections
-  let contacts = HashMap():
-    add("mrbean",
-      HashMap(): add("email", "bean@gmail.com"):
-                 add("url", "http://mrbean.com")):
-    add("larry",
-      HashMap(): add("email", "larry@iamricherthanyou.com"))
+  let contacts = map[
+    ["mrbean", map[
+      ["email", "bean@gmail.com"],
+      ["url", "http://mrbean.com"]]
+    ],
+    ["larry", map[
+      ["email", "larry@iam-richer-than-you.me"]]
+    ]
+  ]
 
   # MrBean and Larry
   let mrbean = contacts: get("mrbean")
@@ -333,19 +331,50 @@ function run = |context| {
 
 struct Point = { x, y }
 
-function run = |context| {
-  let p = Point(10, 20)
-  context: log(p)
-  
-  let tuple = [p, Point(p: x() + 30, p: y() + 30)]
-  context: log(tuple)
-  
-  let set = set[1, 2, 3, 4, 4, 4, 4, 4]
-  context: log(set)
-  
-  let map = map[["foo", "bar"], ["bar", "baz"]]
-  context: log(map)
+augment test.types.Point {
+
+  function move = |this, offsetX, offsetY| {
+    this: x(this: x() + offsetX)
+    this: y(this: y() + offsetY)
+    return this
+  }
+
+  function relative = |this, offsetX, offsetY| -> Point(this: x() + offsetX, this: y() + offsetY)
 }
+
+function run = |context| {
+  let println = printer(context)
+
+  let p1 = Point(1, 2)
+  let p2 = Point(): x(1): y(2)
+  let p3 = p1: frozenCopy()
+  let p4 = p1: frozenCopy()
+
+  println(p1)
+  println("x = " + p1: x())
+  println("y = " + p1: y())
+
+  println("p1 == p2 " + (p1 == p2))
+  println("p1 == p3 " + (p1 == p3))
+  println("p3 == p4 " + (p3 == p4))
+
+  println("#p1 " + p1: hashCode())
+  println("#p2 " + p2: hashCode())
+  println("#p3 " + p3: hashCode())
+  println("#p4 " + p4: hashCode())
+
+  println("p1: members() " + p1: members())
+  println("p1: values() " + p1: values())
+  foreach item in p1 {
+    println(item: get(0) + " -> " + item: get(1))
+  }
+
+  println("p1: set(\"x\", 10) " + p1: set("x", 10))
+  println("p1: move(10, 5) " + p1: move(10, 5))
+  println("p1: relative(11, 6) " + p1: relative(11, 6))
+}
+
+local function printer = |context| -> |what| -> context: log(what)
 </script>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
