@@ -32,3 +32,13 @@ You may alternatively use the Jetty plugin for live-reloads:
     COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
     IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
     CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+## Running inside Docker
+
+[Docker](http://docker.io/) is an increasingly popular container solution. We provide a Docker image
+that can be built from this source code, see the `Dockerfile`.
+
+Build and run cheatsheet:
+
+    $ docker build -t jponge/docker-golo-console
+    $ docker run -p 10080:8080 -d jponge/docker-golo-console
