@@ -40,5 +40,5 @@ that can be built from this source code, see the `Dockerfile`.
 
 Build and run cheatsheet:
 
-    $ docker build -t jponge/docker-golo-console
-    $ docker run -p 10080:8080 -d jponge/docker-golo-console
+    $ docker build -t jponge/docker-golo-console .
+    $ docker run -p 18080:8080 -d jponge/docker-golo-console
