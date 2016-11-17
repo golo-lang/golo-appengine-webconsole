@@ -47,9 +47,9 @@
       <version>1.9.15</version>
     </dependency>
     <dependency>
-      <groupId>org.golo-lang</groupId>
+      <groupId>org.eclipse.golo</groupId>
       <artifactId>golo</artifactId>
-      <version>2.1.0</version>
+      <version>3.1.0</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>

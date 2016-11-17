@@ -94,7 +94,7 @@
 
   <body>
     <div class="container" ng-controller="ConsoleController">
-      
+
       <div class="row section">
         <div class="btn-group">
           <button class="btn dropdown-toggle" data-toggle="dropdown"><i class="icon-beaker icon-large"></i> Samples <span class="caret"></span></button>
@@ -108,13 +108,13 @@
             <li><a href="#" ng-click="load('dynamic-object')">Dynamic objects</a></li>
             <li><a href="#" ng-click="load('data-structs')">Structs</a></li>
             <li><a href="#" ng-click="load('nulls')">Null-safe method invocations and orIfNull</a></li>
-          </ul>          
+          </ul>
         </div>
         <span>
           <a href="http://golo-lang.org/documentation/next/" class="btn"><i class="icon-book icon-large"></i> Golo documentation</a>
           <a href="http://golo-lang.org/" class="btn"><i class="icon-home icon-large"></i> golo-lang.org</a>
-        </span>        
-        <div class="pull-right">          
+        </span>
+        <div class="pull-right">
           <a href="https://twitter.com/share" class="twitter-share-button" data-via="golo_lang" data-size="large" data-hashtags="gololang">Tweet</a>
           <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
           <div class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>
@@ -125,18 +125,18 @@
               var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
             })();
           </script>
-        </div>                
+        </div>
       </div>
-      
-      <div class="row section">        
+
+      <div class="row section">
         <div id="editor"></div>
         <div>
           <button id="exec-button" class="btn btn-large" ng-click="run()">
-            <i id="exec-icon" class="icon-play icon-large"></i> Run (Command+E)            
-          </button>          
-        </div>        
+            <i id="exec-icon" class="icon-play icon-large"></i> Run (Command+E)
+          </button>
+        </div>
       </div>
-      
+
       <div class="row section">
         <pre id="output">{{output}}</pre>
         <ul>
@@ -146,14 +146,14 @@
           <li>The return value of <code>run</code> is printed, too.</li>
         </ul>
       </div>
-      
+
       <div class="row section">
-        <p><img src="https://developers.google.com/appengine/images/appengine-noborder-120x30.gif" 
+        <p><img src="https://developers.google.com/appengine/images/appengine-noborder-120x30.gif"
 alt="Powered by Google App Engine" /></p>
         <p>Golo Web Console. Copyright &copy; 2013 Julien Ponge.</p>
-        <p class="muted">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>          
+        <p class="muted">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
       </div>
-      
+
     </div>
   </body>
 
@@ -220,7 +220,7 @@ augment java.util.List {
         first = false
       } else {
         builder: append(separator): append(element)
-      }      
+      }
     }
     return builder: toString()
   }
@@ -236,7 +236,7 @@ function run = |context| {
 
 import java.util.LinkedList
 
-local function data = -> LinkedList(): 
+local function data = -> LinkedList():
   append("foo@bar.com", "+33.6.11.22.33"):
   append("http://golo-lang.org/"):
   append("def foo = bar(_._) with :> T")
@@ -282,8 +282,8 @@ local function damn = -> "Damn"
 <script type="text/golo" id="dynamic-object">module test
 
 local function Person = |name, email| ->
-  DynamicObject(): 
-    define("name", name): 
+  DynamicObject():
+    define("name", name):
     define("email", email):
     define("to_s", |this| -> this: name() + " <" + this: email() + ">")
 
@@ -377,7 +377,7 @@ function run = |context| {
 local function printer = |context| -> |what| -> context: log(what)
 </script>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
 <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
 
@@ -409,6 +409,7 @@ local function printer = |context| -> |what| -> context: log(what)
 
   var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
   if(iOS) { document.body.style.paddingTop = "15px"}
+
 </script>
 
 </html>
