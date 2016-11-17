@@ -22,19 +22,27 @@
 function ConsoleController($scope, $http) {
   "use strict";
 
+  var defaultCode = function() {
+    console.log("Loading default code");
+    if (document.location.search === undefined || !document.location.search.startsWith("?code=")) {
+      return $("#hello").text();
+    }
+    return decodeURIComponent(document.location.search.substr(6));
+  };
+
   $scope.readyMode = function() {
     $("#exec-icon").removeClass("icon-spinner icon-spin").addClass("icon-play");
     $("#exec-button").removeClass("disabled btn-inverse");
   };
-  
+
   $scope.waitingMode = function() {
     $scope.output = "(running...)";
     $("#exec-icon").addClass("icon-spinner icon-spin").removeClass("icon-play");
     $("#exec-button").addClass("disabled btn-inverse");
   };
-  
+
   $scope.output = "(type some code then run it!)";
-  
+
   $scope.run = function() {
     var code = editor.doc.getValue();
     $scope.waitingMode();    
@@ -54,7 +62,7 @@ function ConsoleController($scope, $http) {
     theme : "solarized",
     styleActiveLine: true,
     lineNumbers : true,
-    value: $("#hello").text(),
+    value: defaultCode(),
     extraKeys: {
       "Ctrl-E": function() {
         $scope.run();
