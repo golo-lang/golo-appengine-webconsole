@@ -16,13 +16,13 @@ CodeMirror.defineMode('golo', function(conf) {
     var identifiers = new RegExp("^[_A-Za-z$][_A-Za-z$0-9]*");
     var properties = new RegExp("^(@|this\.)[_A-Za-z$][_A-Za-z$0-9]*");
 
-    var wordOperators = wordRegexp(['and', 'or', 'not',
-                                    'is', 'isnt', 'in',
+    var wordOperators = wordRegexp(['and', 'or', 'not', 'orIfNull',
+                                    'is', 'isnt', 'in', 'with',
                                     'instanceof', 'typeof', 'var', 'let', 'oftype']);
     var indentKeywords = ['for', 'foreach', 'each', 'while', 'loop', 'if', 'unless', 'else',
                           'case', 'match', 'try', 'catch', 'finally',
-                          'class', 'struct', 'array', 'tuple', 'map', 'list', 'set', 'vector', 'range',
-                          'augment', 'function'];
+                          'class', 'struct', 'union', 'array', 'tuple', 'map', 'list', 'set', 'vector', 'range',
+                          'augment', 'augmentation', 'function'];
     var commonKeywords = ['break', 'continue', 'delete',
                           'do', 'in', 'of', 'new', 'return', 'then',
                           'this', 'throw', 'raise', 'when', 'otherwise', 'until', 'local', 'import', 'module',
